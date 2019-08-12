@@ -355,6 +355,11 @@ class SessionManager{
 				$offset += $len;
 				$timeout = Binary::readInt(substr($packet, $offset, 4));
 				$this->blockAddress($address, $timeout);
+			}elseif($id === RakLib::PACKET_UNBLOCK_ADDRESS){
+				$len = ord($packet{$offset++});
+				$address = substr($packet, $offset, $len);
+				$offset += $len;
+				$this->unblockAddress($address);
 			}elseif($id === RakLib::PACKET_SHUTDOWN){
 				foreach($this->sessions as $session){
 					$this->removeSession($session);
@@ -391,6 +396,10 @@ class SessionManager{
             $this->block[$address] = $final;
         }
     }
+
+    public function unblockAddress($address){
+		unset($this->block[$address]);
+	}
 
 	/**
 	 * @param string $ip
