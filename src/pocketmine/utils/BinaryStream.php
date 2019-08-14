@@ -36,7 +36,8 @@ class BinaryStream extends \stdClass {
 			$str = substr($this->buffer, $this->offset);
 			$this->offset = strlen($this->buffer);
 			return $str;
-		}		
+		}	
+		$rem = strlen($this->buffer) - $this->offset;	
 		assert($rem < $len || !isset($this->buffer{$this->offset}));
 		
 		return $len === 1 ? $this->buffer{$this->offset++} : substr($this->buffer, ($this->offset += $len) - $len, $len);
