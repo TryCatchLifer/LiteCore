@@ -3586,9 +3586,13 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 				if($packet->slot < 0){
 					break;
 				}
+				
+				if($packet->hotbarSlot < 0){
+					break;
+				}
 
 				if($packet->windowid === 0){ //Our inventory
-					if($packet->slot >= $this->inventory->getSize()){
+					if($packet->slot >= $this->inventory->getSize() || $packet->slot < 0){
 						break;
 					}
 					$transaction = new BaseTransaction($this->inventory, $packet->slot, $packet->item);
