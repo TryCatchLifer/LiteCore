@@ -2853,7 +2853,7 @@ class Server{
 	
 	public function about(){
 	 $version = implode(",",ProtocolInfo::MINECRAFT_VERSION);
-		$string = "
+		$string = '
                     
     _     _ _        ____               
    | |   (_) |_ ___ / ___|___  _ __ ___ 
@@ -2866,7 +2866,7 @@ class Server{
 	PHP Version: §e' . PHP_VERSION . '§f
 	OS: §6' . PHP_OS .'§f
 	This core is maintained by §dYarkaDev (vk.com/yarka___ilin)§f and §dgenisyspromcpe (vk.com/ddosenka)
-	";
+	';
 
 		$this->getLogger()->info($string);
 	}
