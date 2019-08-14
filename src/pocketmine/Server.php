@@ -1634,6 +1634,7 @@ class Server{
 			$this->console = new CommandReader();
 			$version = new VersionString($this->getPocketMineVersion());
 			$this->version = $version;
+			$this->about();
 			$this->logger->info("Загрузка свойств и конфигураций...");
 			if(!file_exists($this->dataPath . "pocketmine.yml")){
 				if(file_exists($this->dataPath . "lang.txt")){
@@ -2848,6 +2849,26 @@ class Server{
 		}
 
 		return true;
+	}
+	
+	public function about(){
+	 $version = implode(",",ProtocolInfo::MINECRAFT_VERSION);
+		$string = "
+                    
+    _     _ _        ____               
+   | |   (_) |_ ___ / ___|___  _ __ ___ 
+   | |   | | __/ _ \ |   / _ \| '__/ _ \
+   | |___| | ||  __/ |__| (_) | | |  __/
+   |_____|_|\__\___|\____\___/|_|  \___|
+
+
+	MCPE Version: §b' . $version . '§f
+	PHP Version: §e' . PHP_VERSION . '§f
+	OS: §6' . PHP_OS .'§f
+	This core is maintained by §dYarkaDev (vk.com/yarka___ilin)§f and §dgenisyspromcpe (vk.com/ddosenka)
+	";
+
+		$this->getLogger()->info($string);
 	}
 
 }
