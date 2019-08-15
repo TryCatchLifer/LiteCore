@@ -62,7 +62,6 @@ class FishingHook extends Projectile {
 	 */
 	public function __construct(Level $level, CompoundTag $nbt, Entity $shootingEntity = null){
 		parent::__construct($level, $nbt, $shootingEntity);
-	    $this->shootingEntity->setDataProperty(Entity::DATA_INTERACTIVE_TAG, Entity::DATA_TYPE_STRING, "Ловить рыбку");
 	}
 
 	/**
