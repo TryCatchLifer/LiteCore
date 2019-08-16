@@ -809,6 +809,13 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 	}
 
 	/**
+	 * @return string
+	 */
+	public function getLowerCaseName() : string{
+		return $this->iusername;
+	}
+	
+	/**
 	 * Gets the "friendly" name to display of this player to use in the chat.
 	 *
 	 * @return string
