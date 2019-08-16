@@ -3,7 +3,6 @@
 
 namespace pocketmine;
 
-use super_fix\DisconnectMessageIsNotShownFix;
 use pocketmine\event\block\ItemFrameDropItemEvent;
 use pocketmine\inventory\CraftingManager;
 use pocketmine\network\protocol\LevelEventPacket;
@@ -3965,10 +3964,6 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 	 * @param bool   $notify
 	 */
 	public final function close($message = "", $reason = "generic reason", $notify = true){
-		return DisconnectMessageIsNotShownFix::hook_Player_close($this, $this->connected, $this->closed, $this->interface, $message, $reason, $notify);
-	}
-	
-	public final function close_Original($message = "", $reason = "generic reason", $notify = true){
 		if($this->connected and !$this->closed){
 			if($notify and strlen((string) $reason) > 0){
 				$pk = new DisconnectPacket();

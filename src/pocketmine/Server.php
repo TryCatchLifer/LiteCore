@@ -24,7 +24,6 @@
 
 namespace pocketmine;
 
-use super_fix\DisconnectMessageIsNotShownFix;
 use pocketmine\block\Block;
 use pocketmine\command\CommandReader;
 use pocketmine\command\CommandSender;
