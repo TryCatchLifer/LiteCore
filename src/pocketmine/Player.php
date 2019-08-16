@@ -2338,23 +2338,22 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 	 * @param DataPacket $packet
 	 */
 	public function handleDataPacket(DataPacket $packet){
-		$warn=0;
 		if($this->connected === false){
 			return;
 		}
-	
-            if($packet::NETWORK_ID === 0xb7){
-				if ($this->allowFlight === false && (($packet->flags >> 9) & 0x01 === 1)) { 
-                    $this->sendMessage("§c§lПожалуйста отключите читы или Вы будете наказаны!");
-					$this->setAllowFlight(false);
-					$n=$this->getName();echo "У игрока $n подозрение на читы!";
-                }
-				if (!$this->isSpectator() && (($packet->flags >> 7) & 0x01 === 1)) { 
-                  $this->sendMessage("§c§lПожалуйста отключите читы или Вы будете наказаны!");
-				  $this->setGamemode(0);
-				  $n=$this->getName();echo "У игрока $n подозрение на читы!";
-                }
-			}
+		
+        if($packet::NETWORK_ID === 0xb7){
+			if ($this->allowFlight === false && (($packet->flags >> 9) & 0x01 === 1)) {
+                $this->sendMessage("§c§lПожалуйста, отключите читы!");
+				$this->setAllowFlight(false);
+				$n = $this->getName();
+            }
+			if (!$this->isSpectator() && (($packet->flags >> 7) & 0x01 === 1)) {
+                $this->sendMessage("§c§lПожалуйста, отключите читы!");
+				$this->setGamemode(0);
+				$n = $this->getName();
+            }
+		}
 		
 		if($packet::NETWORK_ID === 0xfe){
 			/** @var BatchPacket $packet */
