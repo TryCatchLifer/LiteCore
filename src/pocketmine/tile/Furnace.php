@@ -28,7 +28,6 @@ use pocketmine\inventory\FurnaceInventory;
 use pocketmine\inventory\FurnaceRecipe;
 use pocketmine\inventory\InventoryHolder;
 use pocketmine\item\Item;
-use pocketmine\block\Block;
 use pocketmine\level\Level;
 use pocketmine\nbt\NBT;
 use pocketmine\nbt\tag\CompoundTag;
