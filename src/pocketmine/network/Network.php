@@ -271,7 +271,7 @@ class Network {
 				throw new \InvalidArgumentException("BatchPacket payload is empty or packet decode error");
 			}
 
-			$str = zlib_decode($packet->payload, 1024 * 1024 * 200); //Max 200MB 
+			$str = zlib_decode($packet->payload, 1024 * 1024 * 2); //Max 2MB 
 			$len = strlen($str);
             
 			if($len === 0){
