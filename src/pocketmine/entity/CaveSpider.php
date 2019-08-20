@@ -29,7 +29,7 @@ class CaveSpider extends Monster {
 
 	public $width = 1;
 	public $length = 1;
-	public $height = 0.5;
+	public $height = 0;
 
 	public $dropExp = [5, 5];
 

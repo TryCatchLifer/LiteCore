@@ -34,7 +34,7 @@ class Wither extends Animal {
 
 	public $width = 0.72;
 	public $length = 6;
-	public $height = 2;
+	public $height = 0;
 
 	public $dropExp = [25, 50];
 	private $boomTicks = 0;

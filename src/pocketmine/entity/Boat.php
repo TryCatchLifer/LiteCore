@@ -34,7 +34,7 @@ use pocketmine\Player;
 class Boat extends Vehicle {
 	const NETWORK_ID = 90;
 
-	public $height = 0.7;
+	public $height = 0;
 	public $width = 1.6;
 
 	public $gravity = 0.5;

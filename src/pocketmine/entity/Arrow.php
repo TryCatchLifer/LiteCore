@@ -35,7 +35,7 @@ class Arrow extends Projectile {
 
 	public $width = 0.5;
 	public $length = 0.5;
-	public $height = 0.5;
+	public $height = 0;
 
 	protected $gravity = 0.05;
 	protected $drag = 0.01;

@@ -40,7 +40,7 @@ class WitherSkeleton extends Monster {
 
 	public $width = 0.3;
 	public $length = 0.9;
-	public $height = 2.4;
+	public $height = 0;
 
 	public $dropExp = [15, 30];
 	
