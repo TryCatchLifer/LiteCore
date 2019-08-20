@@ -30,7 +30,7 @@ class IronGolem extends Animal {
 
 	public $width = 0.3;
 	public $length = 0.9;
-	public $height = 0;
+	public $height = 2.8;
 
 	public function initEntity(){
 		$this->setMaxHealth(100);
@@ -73,5 +73,18 @@ class IronGolem extends Animal {
 		$drops = [ItemItem::get(ItemItem::IRON_INGOT, 0, mt_rand(3, 5))];
 		$drops[] = ItemItem::get(ItemItem::POPPY, 0, mt_rand(0, 2));
 		return $drops;
+	}
+	
+	public function onUpdate($currentTick){
+		if($this->closed){
+			return false;
+		}
+		
+		if($this->isMorph){
+			return true;
+		}
+		$hasUpdate = parent::onUpdate($currentTick);
+		
+		return $hasUpdate;
 	}
 }
