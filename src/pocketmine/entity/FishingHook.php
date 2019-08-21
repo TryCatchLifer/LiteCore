@@ -28,7 +28,6 @@ use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\network\protocol\AddEntityPacket;
 use pocketmine\network\protocol\EntityEventPacket;
 use pocketmine\Player;
-use pocketmine\block\Lava;
 
 
 class FishingHook extends Projectile {
@@ -92,7 +91,7 @@ class FishingHook extends Projectile {
 		$this->timings->startTiming();
 
 		$hasUpdate = parent::onUpdate($currentTick);
-
+         if($this->isInsideOfWater()){
 		if($this->isCollidedVertically && $this->isInsideOfWater()){
 			$this->motionX = 0;
 			$this->motionY += 0.01;
@@ -107,10 +106,21 @@ class FishingHook extends Projectile {
 			$this->keepMovement = false;
 			$hasUpdate = true;
 		}
-		if($this->attractTimer === 0 && mt_rand(0, 100) <= 20){ // chance, that a fish bites
+		if($this->attractTimer === 0 && mt_rand(0, 100) <= 60){ // chance, that a fish bites
 			$this->coughtTimer = mt_rand(5, 10) * 20; // random delay to catch fish
-			$this->attractTimer = mt_rand(30, 100) * 20; // reset timer
+			$this->attractTimer = 10 * 20; // reset timer
 			$this->attractFish();
+			//
+			$fishes = [ItemItem::RAW_FISH, ItemItem::RAW_SALMON, ItemItem::CLOWN_FISH, ItemItem::PUFFER_FISH];
+			$fish = array_rand($fishes, 1);
+			$item = ItemItem::get($fishes[$fish]);
+			$this->getLevel()->getServer()->getPluginManager()->callEvent($ev = new PlayerFishEvent($this->shootingEntity, $item, $this));
+			if(!$ev->isCancelled()){
+				$this->shootingEntity->getInventory()->addItem($item);
+				$this->shootingEntity->addXp(mt_rand(1, 3));
+			}
+			if($this->shootingEntity instanceof Player) $this->shootingEntity->sendTip("§f§lКлюет§r!");
+			
 		}elseif($this->attractTimer > 0){
 			$this->attractTimer--;
 		}
@@ -118,6 +128,11 @@ class FishingHook extends Projectile {
 			$this->coughtTimer--;
 			$this->fishBites();
 		}
+	
+			
+		 }else{
+			 $this->shootingEntity->sendTip("§f§lЗакиньте удочку в воду.§r");
+		 }
 
 		$this->timings->stopTiming();
 
@@ -139,7 +154,6 @@ class FishingHook extends Projectile {
 			$pk->eid = $this->shootingEntity->getId();//$this or $this->shootingEntity
 			$pk->event = EntityEventPacket::FISH_HOOK_BUBBLE;
 			$this->server->broadcastPacket($this->shootingEntity->hasSpawned, $pk);
-			$this->reelLine();
 		}
 	}
 
@@ -157,7 +171,6 @@ class FishingHook extends Projectile {
 			if(!$ev->isCancelled()){
 				$this->shootingEntity->getInventory()->addItem($item);
 				$this->shootingEntity->addXp(mt_rand(1, 6));
-				if($this->shootingEntity instanceof Player) $this->shootingEntity->sendTip("A fish bites!");
 				$this->damageRod = true;
 			}
 		}
