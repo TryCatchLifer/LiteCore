@@ -28,6 +28,7 @@ use pocketmine\network\protocol\MobEffectPacket;
 use pocketmine\Player;
 
 class Effect {
+	
 	const SPEED = 1;
 	const SLOWNESS = 2;
 	const HASTE = 3;
@@ -54,6 +55,7 @@ class Effect {
 	const HEALTH_BOOST = 21;
 	const ABSORPTION = 22;
 	const SATURATION = 23;
+	const LEVITATION = 24;
 
 	const MAX_DURATION = 2147483648;
 

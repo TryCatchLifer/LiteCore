@@ -895,9 +895,11 @@ abstract class Entity extends Location implements Metadatable {
 			if($this->getNameTag() !== ""){
 				$this->namedtag->CustomName = new StringTag("CustomName", $this->getNameTag());
 				$this->namedtag->CustomNameVisible = new StringTag("CustomNameVisible", $this->isNameTagVisible());
+				$this->namedtag->CustomNameAlwaysVisible = new StringTag("CustomNameAlwaysVisible", $this->isNameTagAlwaysVisible());
 			}else{
 				unset($this->namedtag->CustomName);
 				unset($this->namedtag->CustomNameVisible);
+				unset($this->namedtag->CustomNameAlwaysVisible);
 			}
 		}
 
@@ -919,8 +921,8 @@ abstract class Entity extends Location implements Metadatable {
 		]);
 
 		$this->namedtag->FallDistance = new FloatTag("FallDistance", $this->fallDistance);
-		$this->namedtag->Fire = new ShortTag("Fire", $this->fireTicks);
-		$this->namedtag->Air = new ShortTag("Air", $this->getDataProperty(self::DATA_AIR));
+		$this->namedtag->Fire = new ShortTag("Fire", intval($this->fireTicks));
+		$this->namedtag->Air = new ShortTag("Air", intval($this->getDataProperty(self::DATA_AIR)));
 		$this->namedtag->OnGround = new ByteTag("OnGround", $this->onGround == true ? 1 : 0);
 		$this->namedtag->Invulnerable = new ByteTag("Invulnerable", $this->invulnerable == true ? 1 : 0);
 
@@ -951,6 +953,9 @@ abstract class Entity extends Location implements Metadatable {
 			$this->setNameTag($this->namedtag["CustomName"]);
 			if(isset($this->namedtag->CustomNameVisible)){
 				$this->setNameTagVisible($this->namedtag["CustomNameVisible"] > 0);
+			}
+			if(isset($this->namedtag->CustomNameAlwaysVisible)){
+				$this->setNameTagAlwaysVisible($this->namedtag["CustomNameAlwaysVisible"] > 0);
 			}
 		}
 
@@ -989,6 +994,9 @@ abstract class Entity extends Location implements Metadatable {
 	 * @param Player $player
 	 */
 	public function spawnTo(Player $player){
+		if(isset($this->hasSpawned[$player->getLoaderId()])){
+			$this->despawnFrom($player);
+		}
 		if(!isset($this->hasSpawned[$player->getLoaderId()]) and isset($player->usedChunks[Level::chunkHash($this->chunk->getX(), $this->chunk->getZ())])){
 			$this->hasSpawned[$player->getLoaderId()] = $player;
 		}
@@ -1378,7 +1386,7 @@ abstract class Entity extends Location implements Metadatable {
 			$this->lastYaw = $this->yaw;
 			$this->lastPitch = $this->pitch;
 
-			$this->level->addEntityMovement($this->x >> 4, $this->z >> 4, $this->getId(), $this->x, $this->y, $this->z, $this->yaw, $this->pitch, $this->yaw);
+			$this->level->addEntityMovement($this->x >> 4, $this->z >> 4, $this->getId(), $this->x, $this->y + $this->getEyeHeight(), $this->z, $this->yaw, $this->pitch, $this->yaw);
 		}
 
 		if($diffMotion > 0.0025 or ($diffMotion > 0.0001 and $this->getMotion()->lengthSquared() <= 0.0001)){ //0.05 ** 2
