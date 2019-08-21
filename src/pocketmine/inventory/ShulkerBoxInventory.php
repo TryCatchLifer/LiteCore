@@ -1,5 +1,25 @@
 <?php
 
+/*
+ * _      _ _        _____               
+ *| |    (_) |      / ____|              
+ *| |     _| |_ ___| |     ___  _ __ ___ 
+ *| |    | | __/ _ \ |    / _ \| '__/ _ \
+ *| |____| | ||  __/ |___| (_) | | |  __/
+ *|______|_|\__\___|\_____\___/|_|  \___|
+ *
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * @author genisyspromcpe
+ * @link https://github.com/genisyspromcpe/LiteCore
+ *
+ *
+*/
+
 namespace pocketmine\inventory;
 
 use pocketmine\level\Level;
@@ -9,9 +29,7 @@ use pocketmine\network\protocol\types\InventoryNetworkIds;
 use pocketmine\Player;
 use pocketmine\tile\ShulkerBox;
 
-class ShulkerBoxInventory extends ContainerInventory
-{
-
+class ShulkerBoxInventory extends ContainerInventory{
     protected $holder;
 
     /**
@@ -46,13 +64,11 @@ class ShulkerBoxInventory extends ContainerInventory
     /**
      * @return ShulkerBox
      */
-    public function getHolder()
-    {
+    public function getHolder(){
         return $this->holder;
     }
 
-    public function onOpen(Player $who)
-    {
+    public function onOpen(Player $who){
         parent::onOpen($who);
         if(count($this->getViewers()) === 1){
             $pk = new BlockEventPacket();
@@ -85,8 +101,7 @@ class ShulkerBoxInventory extends ContainerInventory
         parent::onClose($who);
     }
 
-    protected function broadcastBlockEventPacket(bool $isOpen)
-    {
+    protected function broadcastBlockEventPacket(bool $isOpen){
         $holder = $this->getHolder();
         $pk = new BlockEventPacket();
         $pk->x = (int)$holder->x;

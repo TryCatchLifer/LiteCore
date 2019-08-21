@@ -1,5 +1,25 @@
 <?php
 
+/*
+ * _      _ _        _____               
+ *| |    (_) |      / ____|              
+ *| |     _| |_ ___| |     ___  _ __ ___ 
+ *| |    | | __/ _ \ |    / _ \| '__/ _ \
+ *| |____| | ||  __/ |___| (_) | | |  __/
+ *|______|_|\__\___|\_____\___/|_|  \___|
+ *
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * @author genisyspromcpe
+ * @link https://github.com/genisyspromcpe/LiteCore
+ *
+ *
+*/
+
 namespace pocketmine\tile;
 
 use pocketmine\block\Block;
@@ -18,8 +38,7 @@ use pocketmine\nbt\tag\ShortTag;
 use pocketmine\nbt\tag\StringTag;
 use pocketmine\Player;
 
-class ShulkerBox extends Spawnable implements InventoryHolder, Container, Nameable
-{
+class ShulkerBox extends Spawnable implements InventoryHolder, Container, Nameable{
 
     /** @var ShulkerBoxInventory */
     protected $inventory;
@@ -40,6 +59,10 @@ class ShulkerBox extends Spawnable implements InventoryHolder, Container, Nameab
 
         for($i = 0; $i < $this->getSize(); ++$i){
             $this->inventory->setItem($i, $this->getItem($i));
+        }
+
+        if(!isset($this->namedtag->facing)){
+            $this->namedtag->facing = new ByteTag("facing", 1);
         }
     }
 
@@ -176,7 +199,7 @@ class ShulkerBox extends Spawnable implements InventoryHolder, Container, Nameab
     public function getSpawnCompound(){
         $nbt = new CompoundTag("", [
             new StringTag("id", Tile::SHULKER_BOX),
-            new ByteTag("facing", 1),
+            $this->namedtag->facing,
             new IntTag("x", (int) $this->x),
             new IntTag("y", (int) $this->y),
             new IntTag("z", (int) $this->z)
