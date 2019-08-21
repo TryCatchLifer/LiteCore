@@ -4518,12 +4518,12 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 	 * @param Inventory $inventory
 	 */
 	public function removeWindow(Inventory $inventory){
-		$inventory->close($this);
 		if($this->windows->contains($inventory)){
 			$id = $this->windows[$inventory];
 			$this->windows->detach($this->windowIndex[$id]);
 			unset($this->windowIndex[$id]);
 		}
+        $inventory->close($this);
 	}
 
 	/**
