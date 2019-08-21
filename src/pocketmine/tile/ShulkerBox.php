@@ -60,6 +60,10 @@ class ShulkerBox extends Spawnable implements InventoryHolder, Container, Nameab
         for($i = 0; $i < $this->getSize(); ++$i){
             $this->inventory->setItem($i, $this->getItem($i));
         }
+
+        if(!isset($this->namedtag->facing)){
+            $this->namedtag->facing = new ByteTag("facing", 1);
+        }
     }
 
     /**
@@ -195,7 +199,7 @@ class ShulkerBox extends Spawnable implements InventoryHolder, Container, Nameab
     public function getSpawnCompound(){
         $nbt = new CompoundTag("", [
             new StringTag("id", Tile::SHULKER_BOX),
-            new ByteTag("facing", 1),
+            $this->namedtag->facing,
             new IntTag("x", (int) $this->x),
             new IntTag("y", (int) $this->y),
             new IntTag("z", (int) $this->z)
