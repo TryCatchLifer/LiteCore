@@ -80,8 +80,7 @@ class ShulkerBox extends Transparent
      * @param Player|null $player
      * @return bool|void
      */
-    public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null)
-    {
+    public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
         $this->getLevel()->setBlock($block, $this, true, true);
         $nbt = new CompoundTag("", [
             new ListTag("Items", []),
@@ -90,16 +89,17 @@ class ShulkerBox extends Transparent
             new IntTag("y", $this->y),
             new IntTag("z", $this->z)
         ]);
-        if($item->hasCustomName()){
+        if ($item->hasCustomName()) {
             $nbt->CustomName = new StringTag("CustomName", $item->getCustomName());
         }
         $tag = $item->getNamedTag();
-        if(isset($tag->Items) && count($tag->Items->getValue()) > 0){
+        if (isset($tag->Items) && count($tag->Items->getValue()) > 0) {
             $nbt->Items = $tag->Items;
         }
         Tile::createTile(Tile::SHULKER_BOX, $this->getLevel(), $nbt);
-        if ($player->isCreative())
+        if ($player->isCreative()) {
             $player->getInventory()->setItemInHand(Item::get(Item::AIR));
+        }
     }
 
     /**
@@ -114,9 +114,7 @@ class ShulkerBox extends Transparent
             $itemNBT = new CompoundTag("", []);
             $itemNBT->Items = $t->namedtag->Items;
             $item->setNamedTag($itemNBT);
-            if (!$player->isCreative()) {
-                $this->getLevel()->dropItem($this->asVector3(), $item);
-            }
+            $this->getLevel()->dropItem($this->asVector3(), $item);
             $t->getInventory()->clearAll();
         }
         $this->getLevel()->setBlock($this, Block::get(Block::AIR), true, true);
