@@ -86,6 +86,7 @@ class ShulkerBox extends Transparent
         $nbt = new CompoundTag("", [
             new ListTag("Items", []),
             new StringTag("id", Tile::SHULKER_BOX),
+            new ByteTag("facing", $face),
             new IntTag("x", $this->x),
             new IntTag("y", $this->y),
             new IntTag("z", $this->z)
