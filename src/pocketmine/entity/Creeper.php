@@ -20,7 +20,6 @@
  *
 */
 
-
 namespace pocketmine\entity;
 
 use pocketmine\event\entity\EntityDamageByEntityEvent;

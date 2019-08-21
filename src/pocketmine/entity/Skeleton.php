@@ -1,23 +1,24 @@
 <?php
 
 /*
+ * _      _ _        _____               
+ *| |    (_) |      / ____|              
+ *| |     _| |_ ___| |     ___  _ __ ___ 
+ *| |    | | __/ _ \ |    / _ \| '__/ _ \
+ *| |____| | ||  __/ |___| (_) | | |  __/
+ *|______|_|\__\___|\_____\___/|_|  \___|
  *
- *  _____   _____   __   _   _   _____  __    __  _____
- * /  ___| | ____| |  \ | | | | /  ___/ \ \  / / /  ___/
- * | |     | |__   |   \| | | | | |___   \ \/ /  | |___
- * | |  _  |  __|  | |\   | | | \___  \   \  /   \___  \
- * | |_| | | |___  | | \  | | |  ___| |   / /     ___| |
- * \_____/ |_____| |_|  \_| |_| /_____/  /_/     /_____/
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * @author iTX Technologies
- * @link https://itxtech.org
+ * @author genisyspromcpe
+ * @link https://github.com/genisyspromcpe/LiteCore
  *
- */
+ *
+*/
 
 
 namespace pocketmine\entity;
