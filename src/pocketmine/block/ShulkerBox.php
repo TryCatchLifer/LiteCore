@@ -1,5 +1,25 @@
 <?php
 
+/*
+ * _      _ _        _____               
+ *| |    (_) |      / ____|              
+ *| |     _| |_ ___| |     ___  _ __ ___ 
+ *| |    | | __/ _ \ |    / _ \| '__/ _ \
+ *| |____| | ||  __/ |___| (_) | | |  __/
+ *|______|_|\__\___|\_____\___/|_|  \___|
+ *
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * @author genisyspromcpe
+ * @link https://github.com/genisyspromcpe/LiteCore
+ *
+ *
+*/
+
 namespace pocketmine\block;
 
 use pocketmine\item\Item;
@@ -14,8 +34,7 @@ use pocketmine\Player;
 use pocketmine\tile\Tile;
 use pocketmine\tile\ShulkerBox as TileShulkerBox;
 
-class ShulkerBox extends Transparent
-{
+class ShulkerBox extends Transparent{
     protected $id = self::SHULKER_BOX;
 
     /**
@@ -64,8 +83,7 @@ class ShulkerBox extends Transparent
     /**
      * @return bool
      */
-    public function canBeActivated() : bool
-    {
+    public function canBeActivated() : bool{
         return true;
     }
 
@@ -80,8 +98,7 @@ class ShulkerBox extends Transparent
      * @param Player|null $player
      * @return bool|void
      */
-    public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null)
-    {
+    public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
         $this->getLevel()->setBlock($block, $this, true, true);
         $nbt = new CompoundTag("", [
             new ListTag("Items", []),
@@ -151,8 +168,7 @@ class ShulkerBox extends Transparent
      * @param Item $item
      * @return array
      */
-    public function getDrops(Item $item) : array
-    {
+    public function getDrops(Item $item) : array{
         return [];
     }
 
@@ -160,8 +176,7 @@ class ShulkerBox extends Transparent
      * @param int $meta
      * @return string
      */
-    public function getColorFromMeta(int $meta) : string
-    {
+    public function getColorFromMeta(int $meta) : string{
         $names = [
             0 => "White",
             1 => "Orange",
