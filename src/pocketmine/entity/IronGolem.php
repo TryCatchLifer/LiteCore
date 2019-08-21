@@ -74,4 +74,17 @@ class IronGolem extends Animal {
 		$drops[] = ItemItem::get(ItemItem::POPPY, 0, mt_rand(0, 2));
 		return $drops;
 	}
+	
+	public function onUpdate($currentTick){
+		if($this->closed){
+			return false;
+		}
+		
+		if($this->isMorph){
+			return true;
+		}
+		$hasUpdate = parent::onUpdate($currentTick);
+		
+		return $hasUpdate;
+	}
 }

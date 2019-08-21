@@ -31,7 +31,7 @@ use pocketmine\event\entity\EntityRegainHealthEvent;
 use pocketmine\event\Timings;
 use pocketmine\item\Item as ItemItem;
 use pocketmine\math\Vector3;
-use pocketmine\nbt\tag\FloatTag;
+use pocketmine\nbt\tag\ShortTag;
 use pocketmine\network\protocol\EntityEventPacket;
 use pocketmine\Player;
 use pocketmine\utils\BlockIterator;
@@ -49,16 +49,16 @@ abstract class Living extends Entity implements Damageable {
 		parent::initEntity();
 
 		if(isset($this->namedtag->HealF)){
-			$this->namedtag->Health = new FloatTag("Health", (int) $this->namedtag["HealF"]);
+			$this->namedtag->Health = new ShortTag("Health", (int) $this->namedtag["HealF"]);
 			unset($this->namedtag->HealF);
 		}
 
-		if(!isset($this->namedtag->Health) or !($this->namedtag->Health instanceof FloatTag)){
-			$this->namedtag->Health = new FloatTag("Health", $this->getMaxHealth());
+		if(!isset($this->namedtag->Health) or !($this->namedtag->Health instanceof ShortTag)){
+			$this->namedtag->Health = new ShortTag("Health", $this->getMaxHealth());
 		}
 
 		if($this->namedtag["Health"] <= 0)
-			$this->setHealth(20.0);
+			$this->setHealth(20);
 		else $this->setHealth($this->namedtag["Health"]);
 	}
 
@@ -67,7 +67,7 @@ abstract class Living extends Entity implements Damageable {
 	 */
 	public function setHealth($amount){
 		$wasAlive = $this->isAlive();
-		parent::setHealth((float) $amount);
+		parent::setHealth($amount);
 		if($this->isAlive() and !$wasAlive){
 			$pk = new EntityEventPacket();
 			$pk->eid = $this->getId();
@@ -78,7 +78,7 @@ abstract class Living extends Entity implements Damageable {
 
 	public function saveNBT(){
 		parent::saveNBT();
-		$this->namedtag->Health = new FloatTag("Health", $this->getHealth());
+		$this->namedtag->Health = new ShortTag("Health", $this->getHealth());
 	}
 
 	/**
@@ -219,7 +219,7 @@ abstract class Living extends Entity implements Damageable {
 			$maxAir = 400 + $EnchantL * 300;
 			$this->setDataProperty(self::DATA_MAX_AIR, self::DATA_TYPE_SHORT, $maxAir);
 			if(!$this->hasEffect(Effect::WATER_BREATHING) and $this->isInsideOfWater()){
-				if($this instanceof WaterAnimal){
+				if(($this instanceof WaterAnimal) or ($this instanceof WitherSkeleton)){
 					$this->setDataProperty(self::DATA_AIR, self::DATA_TYPE_SHORT, 400);
 				}else{
 					$hasUpdate = true;
