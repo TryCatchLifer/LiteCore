@@ -149,7 +149,6 @@ class Creeper extends Monster implements Explosive {
 	}
 	
 	public function onUpdate($currentTick){
-<<<<<<< HEAD
 		if($this->closed){
 			return false;
 		}
@@ -158,8 +157,6 @@ class Creeper extends Monster implements Explosive {
 			return true;
 		}
 
-=======
->>>>>>> 11356dd7e1c5a22b063086ebe83e0ae1b9d6727c
 		$this->timings->startTiming();
 
 		$hasUpdate = parent::onUpdate($currentTick);
@@ -192,10 +189,6 @@ class Creeper extends Monster implements Explosive {
 						if($this->boomTimer > 0){
 							$this->boomTimer--;
 						}else{
-<<<<<<< HEAD
-							//взрыв крипера
-=======
->>>>>>> 11356dd7e1c5a22b063086ebe83e0ae1b9d6727c
 							$this->kill();
 							$size = 4;
 							if($this->isPowered()){

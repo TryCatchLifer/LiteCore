@@ -133,7 +133,6 @@ class Sheep extends Animal implements Colorable {
 	}
 	
 	public function onUpdate($currentTick){
-<<<<<<< HEAD
 		if($this->closed){
 			return false;
 		}
@@ -142,8 +141,6 @@ class Sheep extends Animal implements Colorable {
 			return true;
 		}
 
-=======
->>>>>>> 11356dd7e1c5a22b063086ebe83e0ae1b9d6727c
 		$this->timings->startTiming();
 
 		$hasUpdate = parent::onUpdate($currentTick);
