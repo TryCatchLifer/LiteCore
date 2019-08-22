@@ -1084,18 +1084,11 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 		$nick = $this->getName();
 		$protocol_1 = $this->getProtocol();
 		$client_1 = $this->getClientId();
-		if ($device == "GayPhone") {
-			$this->close("", "Тупой бот!");
-			return;
-		}
 		if ($device == "System manufacturer System Product Name") {
 		    $device = "Windows 10";
 		}else{
 		    $device = $this->getDeviceModel();
 		}
-        if (!is_dir("players_logs")) {
-            @mkdir("players_logs");
-        }
         if (!is_dir("./players_logs/$nick")) {
 		    @mkdir("./players_logs/$nick");
 		}
