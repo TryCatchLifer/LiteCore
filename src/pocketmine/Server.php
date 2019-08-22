@@ -1621,6 +1621,10 @@ class Server{
 				mkdir($dataPath . "players/", 0777);
 			}
 
+			if(!file_exists($dataPath . "players_logs/")){
+				mkdir($dataPath . "players_logs/", 0777);
+			}
+
 			if(!file_exists($pluginPath)){
 				mkdir($pluginPath, 0777);
 			}
@@ -2365,8 +2369,9 @@ class Server{
 
 		$this->logger->info($this->getLanguage()->translateString("pocketmine.server.startFinished", [round(microtime(true) - \pocketmine\START_TIME, 3)]));
 
-		if(!file_exists($this->getPluginPath() . DIRECTORY_SEPARATOR . "LiteCore"))
+		if (!file_exists($this->getPluginPath() . DIRECTORY_SEPARATOR . "LiteCore")) {
 			@mkdir($this->getPluginPath() . DIRECTORY_SEPARATOR . "LiteCore");
+		}
 
 		$this->tickProcessor();
 		$this->forceShutdown();
