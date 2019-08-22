@@ -157,8 +157,8 @@ class SessionManager{
 	private function receivePacket(){
         $len = $this->socket->readPacket($buffer, $source, $port);
         if($len === false){
-            $error = $this->socket->getLastError();
-            /*if($error === SOCKET_EWOULDBLOCK){ //no data
+            /*$error = $this->socket->getLastError();
+            if($error === SOCKET_EWOULDBLOCK){ //no data
                 return false;
             }elseif($error === SOCKET_ECONNRESET){ //client disconnected improperly, maybe crash or lost connection
                 return true;
