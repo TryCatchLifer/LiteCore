@@ -3,7 +3,7 @@ use pocketmine\command\CommandSender;
 use pocketmine\command\ConsoleCommandSender;
 use pocketmine\event\TranslationContainer;
 use pocketmine\level\sound\ExpPickupSound;
-use pocketmine\network\mcpe\protocol\LevelSoundEventPacket;
+use pocketmine\network\protocol\LevelSoundEventPacket;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat;
 class XpCommand extends VanillaCommand {
@@ -61,4 +61,3 @@ class XpCommand extends VanillaCommand {
 		}
 	}
 }
-?>

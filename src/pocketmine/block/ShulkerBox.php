@@ -108,14 +108,17 @@ class ShulkerBox extends Transparent{
             new IntTag("y", $this->y),
             new IntTag("z", $this->z)
         ]);
-        if($item->hasCustomName()){
+        if ($item->hasCustomName()) {
             $nbt->CustomName = new StringTag("CustomName", $item->getCustomName());
         }
         $tag = $item->getNamedTag();
-        if(isset($tag->Items) && count($tag->Items->getValue()) > 0){
+        if (isset($tag->Items) && count($tag->Items->getValue()) > 0) {
             $nbt->Items = $tag->Items;
         }
         Tile::createTile(Tile::SHULKER_BOX, $this->getLevel(), $nbt);
+        if ($player->isCreative()) {
+            $player->getInventory()->setItemInHand(Item::get(Item::AIR));
+        }
     }
 
     /**

@@ -130,7 +130,6 @@ class Block extends Position implements BlockIds, Metadatable{
 			self::$list[self::ENDER_CHEST] = EnderChest::class;
 			self::$list[self::CHEST] = Chest::class;
 			self::$list[self::SHULKER_BOX] = ShulkerBox::class;
-			
 			self::$list[self::DIAMOND_ORE] = DiamondOre::class;
 			self::$list[self::DIAMOND_BLOCK] = Diamond::class;
 			self::$list[self::WORKBENCH] = Workbench::class;
