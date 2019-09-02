@@ -22,7 +22,7 @@ if exist LiteCore*.phar (
 			) else (
 		        echo "Не удалось найти правильную установку LiteCore."
 		        pause
-		        exit 8
+		        exit 1
 		    )
 	    )
 	)
