@@ -21,7 +21,7 @@ class OpCommand extends VanillaCommand {
 		$player = $sender->getServer()->getOfflinePlayer($name);
 		Command::broadcastCommandMessage($sender, new TranslationContainer("commands.op.success", [$player->getName()]));
 		if($player instanceof Player){
-			$player->sendMessage(TextFormat::GRAY . "Теперь вы отператор сервера!");
+			$player->sendMessage(TextFormat::GRAY . "Теперь вы оператор сервера!");
 		}
 		$player->setOp(true);
 		return true;
