@@ -71,6 +71,7 @@ class TimingsCommand extends VanillaCommand {
 				]);
 				curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 				$data = curl_exec($ch);
+				$data = substr($data, curl_getinfo($ch, CURLINFO_HEADER_SIZE));
 				curl_close($ch);
 				if(!is_array($response = json_decode($data, true)) or !isset($response["id"])){
 					$sender->sendMessage(new TranslationContainer("pocketmine.command.timings.pasteError"));
