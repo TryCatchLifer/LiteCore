@@ -55,7 +55,7 @@ class TimingsCommand extends VanillaCommand {
 					"browser" => $sender->getServer()->getName() . " " . $sender->getServer()->getPocketMineVersion(),
 					"data" => stream_get_contents($fileTimings)
 				];
-				$ch = curl_init("https://timings.pmmp.io");
+				$ch = curl_init("https://timings.pmmp.io?upload=true");
 				curl_setopt($ch, CURLOPT_POST, 1);
 				curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 				curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
