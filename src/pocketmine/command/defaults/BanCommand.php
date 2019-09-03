@@ -1,13 +1,39 @@
-<?php namespace pocketmine\command\defaults;
+<?php
+
+/*
+ * _      _ _        _____               
+ *| |    (_) |      / ____|              
+ *| |     _| |_ ___| |     ___  _ __ ___ 
+ *| |    | | __/ _ \ |    / _ \| '__/ _ \
+ *| |____| | ||  __/ |___| (_) | | |  __/
+ *|______|_|\__\___|\_____\___/|_|  \___|
+ *
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * @author genisyspromcpe
+ * @link https://github.com/genisyspromcpe/LiteCore
+ *
+ *
+*/
+
+namespace pocketmine\command\defaults;
+
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\event\TranslationContainer;
 use pocketmine\Player;
+
 class BanCommand extends VanillaCommand {
+	
 	public function __construct($name){
 		parent::__construct("ban", "Бан игрока по нику");
 		$this->setPermission("pocketmine.command.ban.player");
 	}
+
 	public function execute(CommandSender $sender, $label, array $args) {
         if($sender->hasPermission("pocketmine.command.ban.player")) {
 		    if(count($args) > 0) {
@@ -25,4 +51,3 @@ class BanCommand extends VanillaCommand {
 		}
 	}
 }
-?>

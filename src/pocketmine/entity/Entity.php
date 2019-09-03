@@ -1,20 +1,21 @@
 <?php
 
 /*
+ * _      _ _        _____               
+ *| |    (_) |      / ____|              
+ *| |     _| |_ ___| |     ___  _ __ ___ 
+ *| |    | | __/ _ \ |    / _ \| '__/ _ \
+ *| |____| | ||  __/ |___| (_) | | |  __/
+ *|______|_|\__\___|\_____\___/|_|  \___|
  *
- *  ____            _        _   __  __ _                  __  __ ____
- * |  _ \ ___   ___| | _____| |_|  \/  (_)_ __   ___      |  \/  |  _ \
- * | |_) / _ \ / __| |/ / _ \ __| |\/| | | '_ \ / _ \_____| |\/| | |_) |
- * |  __/ (_) | (__|   <  __/ |_| |  | | | | | |  __/_____| |  | |  __/
- * |_|   \___/ \___|_|\_\___|\__|_|  |_|_|_| |_|\___|     |_|  |_|_|
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * @author PocketMine Team
- * @link http://www.pocketmine.net/
+ * @author genisyspromcpe
+ * @link https://github.com/genisyspromcpe/LiteCore
  *
  *
 */
@@ -284,6 +285,7 @@ abstract class Entity extends Location implements Metadatable {
 		Entity::registerEntity(Zombie::class);
 		Entity::registerEntity(ZombieHorse::class);
 		Entity::registerEntity(ZombieVillager::class);
+		Entity::registerEntity(WitherTNT::class);
 
 		Entity::registerEntity(Human::class, true);
 	}
@@ -404,6 +406,8 @@ abstract class Entity extends Location implements Metadatable {
 	protected $activatedPressurePlates = [];
 
 	public $dropExp = [0, 0];
+	
+	public $isMorph = false;
 
 
 	/**

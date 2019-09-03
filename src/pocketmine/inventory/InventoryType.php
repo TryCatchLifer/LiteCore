@@ -55,7 +55,7 @@ class InventoryType {
 	const BEACON = 14;
     const SHULKER_BOX = 15;
 
-	const PLAYER_FLOATING = 254;
+    const PLAYER_FLOATING = 254;
 
 	private static $default = [];
 

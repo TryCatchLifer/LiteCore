@@ -1,25 +1,4 @@
 <?php
-
-/*
- * _      _ _        _____               
- *| |    (_) |      / ____|              
- *| |     _| |_ ___| |     ___  _ __ ___ 
- *| |    | | __/ _ \ |    / _ \| '__/ _ \
- *| |____| | ||  __/ |___| (_) | | |  __/
- *|______|_|\__\___|\_____\___/|_|  \___|
- *
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * @author genisyspromcpe
- * @link https://github.com/genisyspromcpe/LiteCore
- *
- *
-*/
-
 namespace pocketmine\entity;
 
 
@@ -32,7 +11,7 @@ use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\network\protocol\AddEntityPacket;
 use pocketmine\Player;
 
-class PrimedTNT extends Entity implements Explosive {
+class WitherTNT extends Entity implements Explosive {
 	const NETWORK_ID = 65;
 
 	public $width = 0.98;
@@ -79,7 +58,7 @@ class PrimedTNT extends Entity implements Explosive {
 		if(isset($this->namedtag->Fuse)){
 			$this->fuse = $this->namedtag["Fuse"];
 		}else{
-			$this->fuse = 80;
+			$this->fuse = 120;
 		}
 
 		$this->setDataFlag(self::DATA_FLAGS, self::DATA_FLAG_IGNITED, true);
@@ -119,10 +98,6 @@ class PrimedTNT extends Entity implements Explosive {
 			return true;
 		}
 
-		if($this->fuse % 5 === 0){ //don't spam it every tick, it's not necessary
-			$this->setDataProperty(self::DATA_FUSE_LENGTH, self::DATA_TYPE_INT, $this->fuse);
-		}
-
 		$this->lastUpdate = $currentTick;
 
 		$hasUpdate = $this->entityBaseTick($tickDiff);
@@ -133,25 +108,42 @@ class PrimedTNT extends Entity implements Explosive {
 
 			$this->move($this->motionX, $this->motionY, $this->motionZ);
 
-			$friction = 1 - $this->drag;
-
-			$this->motionX *= $friction;
-			$this->motionY *= $friction;
-			$this->motionZ *= $friction;
-
 			$this->updateMovement();
 
 			if($this->onGround){
 				$this->motionY *= -0.5;
 				$this->motionX *= 0.7;
 				$this->motionZ *= 0.7;
+				if($this->fuse > 10){
+					$this->fuse = 10;
+				}
+			}else{
+				$side = $this->getDirection();
+				$x = 0;
+				$z = 0;
+				if($side == 0){
+					$x = 0.4;
+				}elseif($side == 1){
+					$z = 0.4;
+				}elseif($side == 2){
+					$x = -0.4;
+				}elseif($side == 3){
+					$z = -0.4;
+				}
+				
+				if($x != 0){
+					$this->motionX = $x;
+				}
+				if($z != 0){
+					$this->motionZ = $z;
+				}
 			}
-
-			$this->fuse -= $tickDiff;
 
 			if($this->fuse <= 0){
 				$this->kill();
 				$this->explode();
+			}else{
+				$this->fuse--;
 			}
 
 		}
@@ -161,12 +153,12 @@ class PrimedTNT extends Entity implements Explosive {
 	}
 
 	public function explode(){
-		$this->server->getPluginManager()->callEvent($ev = new ExplosionPrimeEvent($this, 4, $this->dropItem));
+		$this->server->getPluginManager()->callEvent($ev = new ExplosionPrimeEvent($this, 3, $this->dropItem));
 
 		if(!$ev->isCancelled()){
 			$explosion = new Explosion($this, $ev->getForce(), $this, $ev->dropItem());
 			if($ev->isBlockBreaking()){
-				$explosion->explodeA();
+				$explosion->explodeC();
 			}
 			$explosion->explodeB();
 		}
@@ -177,7 +169,7 @@ class PrimedTNT extends Entity implements Explosive {
 	 */
 	public function spawnTo(Player $player){
 		$pk = new AddEntityPacket();
-		$pk->type = PrimedTNT::NETWORK_ID;
+		$pk->type = WitherTNT::NETWORK_ID;
 		$pk->eid = $this->getId();
 		$pk->x = $this->x;
 		$pk->y = $this->y;

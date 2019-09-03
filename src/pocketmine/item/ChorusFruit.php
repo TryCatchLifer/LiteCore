@@ -48,7 +48,7 @@ class ChorusFruit extends Food {
 	}
        
 	public function onConsume(Entity $human) {
-		//parent::onConsume($human);
+		parent::onConsume($human);
 		$lvl = $human->getLevel();
 		assert($lvl !== null);
 		

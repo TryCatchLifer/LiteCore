@@ -300,7 +300,7 @@ interface BlockIds {
 
 	const PURPUR_STAIRS = 203;
 
-    const UNDYED_SHULKER_BOX = 205;
+	const UNDYED_SHULKER_BOX = 205;
 	const END_STONE_BRICKS = 206;
 	const FROSTED_ICE = 207;
 	const END_ROD = 208;

@@ -29,7 +29,7 @@ class Ghast extends FlyingAnimal {
 
 	public $width = 6;
 	public $length = 6;
-	public $height = 6;
+	public $height = 0;
 
 	/**
 	 * @return string
