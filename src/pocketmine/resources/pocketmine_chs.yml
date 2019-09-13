@@ -169,7 +169,7 @@ auto-report:
 
 anonymous-statistics:
  #发送用于数据收集和插件使用情况统计的匿名数据
- enabled: true
+ enabled: false #TODO: re-enable this when we have a new stats host
  host: stats.pocketmine.net
 
 commands:

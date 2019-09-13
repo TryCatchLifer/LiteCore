@@ -169,7 +169,7 @@ auto-report:
 
 anonymous-statistics:
  #Отправляет анонимную статистику для сбора данных, отслеживания использования плагинов
- enabled: true
+ enabled: false #TODO: повторно включите это, когда у нас будет новый хост статистики
  host: stats.pocketmine.net
 
 commands:
