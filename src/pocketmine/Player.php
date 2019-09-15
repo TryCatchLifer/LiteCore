@@ -4053,6 +4053,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 			$this->loadQueue = [];
 			$this->hasSpawned = [];
 			$this->spawnPosition = null;
+			$this->forceMovement = null;
 
 			if($this->server->dserverConfig["enable"] and $this->server->dserverConfig["queryAutoUpdate"]) $this->server->updateQuery();
 		}
