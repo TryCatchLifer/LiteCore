@@ -181,6 +181,10 @@ class AsyncPool {
 			}
 		}
 
+		foreach($this->workers as $worker){
+			$worker->collect();
+		}
+
 		Timings::$schedulerAsyncTimer->stopTiming();
 	}
 }
