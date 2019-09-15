@@ -356,7 +356,7 @@ namespace pocketmine {
 	 *
 	 * @return array
 	 */
-	function getTrace($start = 1, $trace = null){
+	function getTrace($start = 0, $trace = null){
 		if($trace === null){
 			if(function_exists("xdebug_get_function_stack")){
 				$trace = array_reverse(xdebug_get_function_stack());
