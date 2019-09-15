@@ -141,7 +141,7 @@ class FallingSand extends Entity {
 			$pos = (new Vector3($this->x - 0.5, $this->y, $this->z - 0.5))->round();
 
 			if($this->onGround){
-				$this->kill();
+				$this->flagForDespawn();
 				$block = $this->level->getBlock($pos);
 				if($block->getId() > 0 and !$block->isSolid() and !($block instanceof Liquid)){
 					$this->getLevel()->dropItem($this, ItemItem::get($this->getBlock(), $this->getDamage(), 1));

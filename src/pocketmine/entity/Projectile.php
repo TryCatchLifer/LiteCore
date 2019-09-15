@@ -194,7 +194,7 @@ abstract class Projectile extends Entity {
 						}
 					}
 
-					$this->kill();
+					$this->flagForDespawn();
 					return true;
 				}
 			}

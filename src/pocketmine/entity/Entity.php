@@ -389,6 +389,8 @@ abstract class Entity extends Location implements Metadatable {
 	protected $server;
 
 	public $closed = false;
+	/** @var bool */
+	private $needsDespawn = false;
 
 	/** @var \pocketmine\event\TimingsHandler */
 	protected $timings;
@@ -1305,7 +1307,7 @@ abstract class Entity extends Location implements Metadatable {
 			$this->removeAllEffects();
 			$this->despawnFromAll();
 			if(!$this->isPlayer){
-				$this->close();
+				$this->flagForDespawn();
 			}
 
 			Timings::$timerEntityBaseTick->stopTiming();
@@ -1433,11 +1435,11 @@ abstract class Entity extends Location implements Metadatable {
 			if($this->deadTicks >= 10){
 				$this->despawnFromAll();
 				if(!$this->isPlayer){
-					$this->close();
+					$this->flagForDespawn();
 				}
 			}
 
-			return $this->deadTicks < 10;
+			return true;
 		}
 
 		$tickDiff = $currentTick - $this->lastUpdate;
@@ -1446,6 +1448,11 @@ abstract class Entity extends Location implements Metadatable {
 		}
 
 		$this->lastUpdate = $currentTick;
+
+		if($this->needsDespawn){
+			$this->close();
+			return false;
+		}
 
 		$this->timings->startTiming();
 
@@ -2198,6 +2205,13 @@ abstract class Entity extends Location implements Metadatable {
 		foreach($this->hasSpawned as $player){
 			$this->despawnFrom($player);
 		}
+	}
+
+	/**
+	 * Flags the entity to be removed from the world on the next tick.
+	 */
+	public function flagForDespawn() : void{
+		$this->needsDespawn = true;
 	}
 
 	public function close(){
