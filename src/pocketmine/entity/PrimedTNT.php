@@ -150,7 +150,7 @@ class PrimedTNT extends Entity implements Explosive {
 			$this->fuse -= $tickDiff;
 
 			if($this->fuse <= 0){
-				$this->flagForDespawn();
+				$this->kill();
 				$this->explode();
 			}
 

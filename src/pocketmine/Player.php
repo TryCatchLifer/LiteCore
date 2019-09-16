@@ -1678,7 +1678,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 				if($add){
 					$this->getFloatingInventory()->addItem(clone $item);
 				}
-				$entity->flagForDespawn();
+				$entity->kill();
 			}elseif($entity instanceof DroppedItem){
 				if($entity->getPickupDelay() <= 0){
 					$item = $entity->getItem();
@@ -1715,7 +1715,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 						if($add){
 							$this->getFloatingInventory()->addItem(clone $item);
 						}
-						$entity->flagForDespawn();
+						$entity->kill();
 					}
 				}
 			}
