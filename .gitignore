@@ -10,6 +10,7 @@ server.properties
 *.txt
 lite.yml
 crashdumps/*
+resource_packs/
 
 # Common IDEs
 .idea/*
