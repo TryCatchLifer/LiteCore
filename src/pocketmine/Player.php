@@ -1666,9 +1666,6 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 				}
 
 				$this->server->getPluginManager()->callEvent($ev = new InventoryPickupArrowEvent($this->inventory, $entity));
-				if($entity->getBow() !== null and $entity->getBow()->hasEnchantment(Enchantment::INFINITY)) {
-					$ev->setCancelled(true);
-				}
 				if($ev->isCancelled()){
 					continue;
 				}
