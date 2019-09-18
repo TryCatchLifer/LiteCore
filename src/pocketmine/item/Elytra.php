@@ -22,7 +22,7 @@
 namespace pocketmine\item;
 
 
-class Elytra extends Armor {
+class Elytra extends Item {
 	/**
 	 * Elytra constructor.
 	 *
@@ -31,26 +31,5 @@ class Elytra extends Armor {
 	 */
 	public function __construct($meta = 0, $count = 1){
 		parent::__construct(self::ELYTRA, $meta, $count, "Elytra Wings");
-	}
-
-	/**
-	 * @return int
-	 */
-	public function getArmorType(){
-		return Armor::TYPE_CHESTPLATE;
-	}
-
-	/**
-	 * @return int
-	 */
-	public function getMaxDurability(){
-		return 431;
-	}
-
-	/**
-	 * @return bool
-	 */
-	public function isChestplate(){
-		return true;
 	}
 }
