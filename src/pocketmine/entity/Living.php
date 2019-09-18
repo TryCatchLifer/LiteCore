@@ -164,13 +164,15 @@ abstract class Living extends Entity implements Damageable {
 	 * @param        $z
 	 * @param float  $base
 	 */
-	public function knockBack(Entity $attacker, $damage, $x, $z, $base = 0.4, $baseY = 0.4){
+	public function knockBack(Entity $attacker, $damage, $x, $z, $base = 0.4){
 		$f = sqrt($x * $x + $z * $z);
 		if($f <= 0){
 			return;
 		}
 
 		$f = 1 / $f;
+
+		$baseY = max(0.4, $base / 1.5);
 
 		$motion = new Vector3($this->motionX, $this->motionY, $this->motionZ);
 
