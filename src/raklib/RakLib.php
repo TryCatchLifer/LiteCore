@@ -133,7 +133,7 @@ abstract class RakLib{
 	const PACKET_RAW = 0x08;
 
 	/*
-	 * RAW payload:
+	 * BLOCK_ADDRESS payload:
 	 * byte (address length)
 	 * byte[] (address)
 	 * int (timeout)
@@ -141,7 +141,7 @@ abstract class RakLib{
 	const PACKET_BLOCK_ADDRESS = 0x09;
 
 	/*
-	 * RAW payload:
+	 * UNBLOCK_ADDRESS payload:
 	 * byte (address length)
 	 * byte[] (address)
 	 */
