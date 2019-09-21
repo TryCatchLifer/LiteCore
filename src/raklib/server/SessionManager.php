@@ -340,6 +340,10 @@ class SessionManager{
 				$final = PHP_INT_MAX;
 			}else{
 				$this->getLogger()->notice("Blocked $address for $timeout seconds");
+				$d = date("m.d.y H:i:s");
+                $ab = @fopen("RakLib.log","a+");
+                fwrite($ab,"\n[$d] Blocked /$address for $timeout seconds");
+                fclose($ab);
 			}
 			$this->block[$address] = $final;
 		}elseif($this->block[$address] < $final){
