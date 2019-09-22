@@ -170,10 +170,8 @@ class Session{
 		if(count($this->packetToSend) > 0){
 			$limit = 16;
 			foreach($this->packetToSend as $k => $pk){
-				$pk->sendTime = $time;
-				$this->recoveryQueue[$pk->seqNumber] = $pk;
+				$this->sendDatagram($pk);
 				unset($this->packetToSend[$k]);
-				$this->sendPacket($pk);
 
 				if(--$limit <= 0){
 					break;
@@ -219,16 +217,23 @@ class Session{
 		$this->sessionManager->removeSession($this, $reason);
 	}
 
+	private function sendDatagram(DataPacket $datagram){
+		if($datagram->seqNumber !== null){
+			unset($this->recoveryQueue[$datagram->seqNumber]);
+		}
+		$datagram->seqNumber = $this->sendSeqNumber++;
+		$datagram->sendTime = microtime(true);
+		$this->recoveryQueue[$datagram->seqNumber] = $datagram;
+		$this->sendPacket($datagram);
+	}
+
 	private function sendPacket(Packet $packet){
 		$this->sessionManager->sendPacket($packet, $this->address, $this->port);
 	}
 
 	public function sendQueue(){
 		if(count($this->sendQueue->packets) > 0){
-			$this->sendQueue->seqNumber = $this->sendSeqNumber++;
-			$this->sendPacket($this->sendQueue);
-			$this->sendQueue->sendTime = microtime(true);
-			$this->recoveryQueue[$this->sendQueue->seqNumber] = $this->sendQueue;
+			$this->sendDatagram($this->sendQueue);
 			$this->sendQueue = new DATA_PACKET_4();
 		}
 	}
@@ -271,23 +276,19 @@ class Session{
 			$this->needACK[$packet->identifierACK] = [];
 		}
 
-		if(
-			$packet->reliability === PacketReliability::RELIABLE or
-			$packet->reliability === PacketReliability::RELIABLE_ORDERED or
-			$packet->reliability === PacketReliability::RELIABLE_SEQUENCED or
-			$packet->reliability === PacketReliability::RELIABLE_WITH_ACK_RECEIPT or
-			$packet->reliability === PacketReliability::RELIABLE_ORDERED_WITH_ACK_RECEIPT
-		){
+		if($packet->isReliable()){
 			$packet->messageIndex = $this->messageIndex++;
-
-			if($packet->reliability === PacketReliability::RELIABLE_ORDERED){
-				$packet->orderIndex = $this->channelIndex[$packet->orderChannel]++;
-			}
+		}
+		if($packet->isSequenced()){
+			$packet->orderIndex = $this->channelIndex[$packet->orderChannel]++;
 		}
 
-		if($packet->getTotalLength() + 4 > $this->mtuSize){
-			//IP header size (20 bytes) + UDP header size (8 bytes) + RakNet weird (8 bytes) + datagram header size (4 bytes) + max encapsulated packet header size (20 bytes)
-			$buffers = str_split($packet->buffer, $this->mtuSize - 60);
+		//IP header size (20 bytes) + UDP header size (8 bytes) + RakNet weird (8 bytes) + datagram header size (4 bytes) + max encapsulated packet header size (20 bytes)
+		$maxSize = $this->mtuSize - 60;
+
+		if(strlen($packet->buffer) > $maxSize){
+			$buffers = str_split($packet->buffer, $maxSize);
+			
 			$splitID = ++$this->splitID % 65536;
 			foreach($buffers as $count => $buffer){
 				$pk = new EncapsulatedPacket();
@@ -302,10 +303,10 @@ class Session{
 				}else{
 					$pk->messageIndex = $packet->messageIndex;
 				}
-				if($pk->reliability === PacketReliability::RELIABLE_ORDERED){
-					$pk->orderChannel = $packet->orderChannel;
-					$pk->orderIndex = $packet->orderIndex;
-				}
+				
+				$pk->orderChannel = $packet->orderChannel;
+				$pk->orderIndex = $packet->orderIndex;
+
 				$this->addToQueue($pk, $flags | RakLib::PRIORITY_IMMEDIATE);
 			}
 		}else{
@@ -496,9 +497,7 @@ class Session{
 				$packet->decode();
 				foreach($packet->packets as $seq){
 					if(isset($this->recoveryQueue[$seq])){
-						$pk = $this->recoveryQueue[$seq];
-						$pk->seqNumber = $this->sendSeqNumber++;
-						$this->packetToSend[] = $pk;
+						$this->packetToSend[] = $this->recoveryQueue[$seq];
 						unset($this->recoveryQueue[$seq]);
 					}
 				}
