@@ -22,8 +22,6 @@
 namespace raklib\server;
 
 class UDPServerSocket{
-	/** @var \Logger */
-	protected $logger;
 	protected $socket;
 
 	public function __construct(\ThreadedLogger $logger, $port = 19132, $interface = "0.0.0.0"){
@@ -53,7 +51,7 @@ class UDPServerSocket{
 	 * @param string &$source
 	 * @param int    &$port
 	 *
-	 * @return int
+	 * @return int|bool
 	 */
 	public function readPacket(&$buffer, &$source, &$port){
 		return socket_recvfrom($this->socket, $buffer, 65535, 0, $source, $port);
@@ -64,7 +62,7 @@ class UDPServerSocket{
 	 * @param string $dest
 	 * @param int    $port
 	 *
-	 * @return int
+	 * @return int|bool
 	 */
 	public function writePacket($buffer, $dest, $port){
 		return socket_sendto($this->socket, $buffer, strlen($buffer), 0, $dest, $port);

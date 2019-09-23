@@ -29,6 +29,10 @@ use raklib\Binary;
 #include <rules/RakLibPacket.h>
 
 class EncapsulatedPacket{
+	const RELIABILITY_SHIFT = 5;
+	const RELIABILITY_FLAGS = 0b111 << self::RELIABILITY_SHIFT;
+	
+	const SPLIT_FLAG = 0b00010000;
 
 	public $reliability;
 	public $hasSplit = false;
@@ -55,8 +59,8 @@ class EncapsulatedPacket{
 		$packet = new EncapsulatedPacket();
 
 		$flags = ord($binary{0});
-		$packet->reliability = $reliability = ($flags & 0b11100000) >> 5;
-		$packet->hasSplit = $hasSplit = ($flags & 0b00010000) > 0;
+		$packet->reliability = $reliability = ($flags & self::RELIABILITY_FLAGS) >> self::RELIABILITY_SHIFT;
+		$packet->hasSplit = $hasSplit = ($flags & self::SPLIT_FLAG) > 0;
 		if($internal){
 			$length = Binary::readInt(substr($binary, 1, 4));
 			$packet->identifierACK = Binary::readInt(substr($binary, 5, 4));
@@ -106,7 +110,7 @@ class EncapsulatedPacket{
 	 */
 	public function toBinary($internal = false){
 		return
-			chr(($this->reliability << 5) | ($this->hasSplit ? 0b00010000 : 0)) .
+			chr(($this->reliability << self::RELIABILITY_SHIFT) | ($this->hasSplit ? self::SPLIT_FLAG : 0)) .
 			($internal ? Binary::writeInt(strlen($this->buffer)) . Binary::writeInt($this->identifierACK) : Binary::writeShort(strlen($this->buffer) << 3)) .
 			($this->reliability > PacketReliability::UNRELIABLE ?
 				($this->isReliable() ? Binary::writeLTriad($this->messageIndex) : "") .
