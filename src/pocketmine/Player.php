@@ -251,6 +251,8 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 	protected $spawnThreshold;
 	/** @var null|WeakPosition */
 	private $spawnPosition = null;
+	
+	private $ping = 0;
 
 	protected $inAirTicks = 0;
 	protected $startAirTicks = 5;
@@ -1280,6 +1282,15 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 		return true;
 	}
 
+	public function setPing($ping) {
+		$this->ping = $ping;
+	}
+	
+		public function getPing() {
+		return $this->ping;
+	}
+	
+	
 	/**
 	 * @param DataPacket $packet
 	 * @param bool       $needACK
