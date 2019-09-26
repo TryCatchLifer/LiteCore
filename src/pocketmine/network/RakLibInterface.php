@@ -118,8 +118,12 @@ class RakLibInterface implements ServerInstance, AdvancedSourceInterface {
 
 	/**
 	 * @param Player $player
-	 * @param string $reason
 	 */
+	
+	public function handlePing(Player $player, $ping){
+			$player->setPing($ping);
+	}
+	
 	public function close(Player $player, $reason = "unknown reason"){
 		if(isset($this->identifiers[$h = spl_object_hash($player)])){
 			unset($this->players[$this->identifiers[$h]]);
