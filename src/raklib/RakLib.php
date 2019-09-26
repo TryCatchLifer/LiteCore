@@ -84,7 +84,11 @@ abstract class RakLib{
 	 * long (clientID)
 	 */
 	const PACKET_OPEN_SESSION = 0x02;
-
+    
+	
+	const PACKET_PING = 0x0a;
+	
+	
 	/*
 	 * CLOSE_SESSION payload:
 	 * byte (identifier length)
