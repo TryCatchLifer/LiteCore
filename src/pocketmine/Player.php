@@ -242,6 +242,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 
 	/** @var Player[] */
 	protected $hiddenPlayers = [];
+	private $ping = 0;
 
 	/** @var Vector3 */
 	protected $newPosition;
@@ -1012,6 +1013,26 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 		}
 	}
 
+	public function setPing($ping) {
+		$this->ping = $ping;
+	}
+	
+	public function getPing() {
+		return $this->ping;
+	}
+	
+	public function sendPing() {
+		if ($this->ping <= 150) {
+			$this->sendMessage("C§7(§6Система§7) §cХорошее соеденение:({$this->ping}ms)");
+		} elseif ($this->ping <= 250) {
+			$this->sendMessage("§7(§6Система§7) §cДостойное соеденение: ({$this->ping}ms)");
+		} else {
+			$this->sendMessage("Ужасное соеденение: ({$this->ping}ms)");
+		}
+	}
+	
+	
+	
 	protected function sendNextChunk(){
 		if($this->connected === false){
 			return;
